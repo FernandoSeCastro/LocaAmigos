@@ -1,0 +1,60 @@
+﻿DROP DATABASE [IF EXISTS] LocaAmigos;
+CREATE DATABASE LocaAmigos;
+
+DROP TABLE IF EXISTS Pessoa;
+
+CREATE TABLE Pessoa (
+	id serial PRIMARY KEY,
+	Created DATE NOT NULL DEFAULT CURRENT_DATE,
+	Update DATE,
+	Remove Date,
+	Name VARCHAR (255) NOT NULL,
+	nomecompleto VARCHAR (255) NOT NULL,
+	DataNascimento DATE
+);
+
+CREATE TABLE Usuario (
+	id serial PRIMARY KEY,
+	Created DATE NOT NULL DEFAULT CURRENT_DATE,
+	Update DATE,
+	Remove Date,
+	Email VARCHAR (255) NOT NULL,
+	Senha VARCHAR (255) NOT NULL,
+	Ativo BOOLEAN DEFAULT 't',
+	IdPessoa serial,
+	CONSTRAINT fk_usuario_pessoa
+      FOREIGN KEY(IdPessoa) 
+	  REFERENCES pessoa(Id)
+);
+
+CREATE TABLE Jogos (
+	id serial PRIMARY KEY,
+	Created DATE NOT NULL DEFAULT CURRENT_DATE,
+	Update DATE,
+	Remove Date,
+	Name VARCHAR (255) NOT NULL,
+	TipoJogo VARCHAR (255) NOT NULL,
+	Ativo BOOLEAN DEFAULT 't'
+);
+
+CREATE TABLE Movimentacoes (
+	id serial PRIMARY KEY,
+	Created DATE NOT NULL DEFAULT CURRENT_DATE,
+	Update DATE,
+	Remove Date,
+	Inicio DATE,
+	Fim DATE,
+	Ativo BOOLEAN DEFAULT 't',
+	IdJogos serial,
+	CONSTRAINT fk_movimentacoes_jogos
+      FOREIGN KEY(IdJogos) 
+	  REFERENCES Jogos(Id),
+	IdPessoa serial,
+	CONSTRAINT fk_Pessoa_jogos
+      FOREIGN KEY(IdPessoa) 
+	  REFERENCES Jogos(Id),
+	IdUsuario serial,
+	CONSTRAINT fk_usuario_jogos
+      FOREIGN KEY(IdUsuario) 
+	  REFERENCES Usuario(Id)
+);
