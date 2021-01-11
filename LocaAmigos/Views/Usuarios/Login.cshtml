@@ -1,0 +1,21 @@
+﻿@model LocaAmigos.Models.DVO.UsuarioLoginVO
+@{
+    Layout = null;
+}
+
+    <form asp-action="Login">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="email" class="control-label"></label>
+            <input asp-for="email" class="form-control" />
+            <span asp-validation-for="email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="senha" class="control-label"></label>
+            <input asp-for="senha" class="form-control" />
+            <span asp-validation-for="senha" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-primary" />
+        </div>
+    </form>

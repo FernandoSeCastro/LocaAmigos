@@ -1,0 +1,40 @@
+﻿@model IEnumerable<LocaAmigos.Models.Pessoa>
+@{ 
+    Layout = null;
+}
+<table id="tablefc" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.nomecompleto)
+            </th>
+            <th>
+               
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr id="@item.id@item.nomecompleto.Replace(' ','_')">
+            <td>
+                @Html.DisplayFor(modelItem => item.nomecompleto)
+            </td>
+            <td>
+                <button onclick="SelecionarPessoa( @item.id ,'@item.nomecompleto.Replace(' ','_')' );" type="button" class="btn btn-success">Selecionar</button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    function SelecionarPessoa(id,nome) {
+        //Pega o texto do <input> e joga para maiúscula objetivando a posterior comparação case-insensitive
+        var table = document.getElementById("tablefc");
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            row.style.backgroundColor = "white";
+        }
+        document.getElementById(id + nome).style.backgroundColor = "rgba(107, 226, 101, 0.64)";
+    }
+
+</script>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<LocaAmigos.Models.Jogos>
+@{ 
+    Layout = null;
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tipojogo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ativo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.created)
+            </th>
+            <th>
+                Ação
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tipojogo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ativo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.created)
+                </td>
+                <td>
+                    <a asp-action="Reservar" asp-route-id="@item.id">Reservar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

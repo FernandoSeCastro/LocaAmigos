@@ -1,0 +1,75 @@
+﻿@model IEnumerable<LocaAmigos.Models.Jogos>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div>    
+    @Html.Label("Pesquisar")
+    <input type="text" id="txtPesquisar" onkeyup="getJogosFiltrado();" onchange="getJogosFiltrado();" />
+</div>
+<div id="TabelaGames">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.tipojogo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ativo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.created)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipojogo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ativo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.created)
+                    </td>
+                    <td>
+                        <a asp-action="Reservar" asp-route-id="@item.id">Reservar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<script type="text/javascript">
+
+    function getJogosFiltrado() {
+        var nome = document.getElementById("txtPesquisar").value;
+        $.ajax({
+        type: "GET",
+            url: '@Url.Action("_GetListaGamesLiberados", "Jogos")',
+            data: "nome="+ nome,
+            success: function(d) {
+            /* d is the HTML of the returned response */
+                $("#TabelaGames").html(d); //replaces previous HTML with action
+            }
+        });
+    }
+</script>
