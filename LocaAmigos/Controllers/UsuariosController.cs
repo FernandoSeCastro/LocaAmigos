@@ -19,7 +19,7 @@ namespace LocaAmigos.Controllers
         private readonly BdContext _context;
         private static IConfiguration _Configuration;
 
-        public UsuariosController(IConfiguration Configuration,BdContext context)
+        public UsuariosController(IConfiguration Configuration, BdContext context)
         {
             _Configuration = Configuration;
             _context = context;
@@ -35,11 +35,11 @@ namespace LocaAmigos.Controllers
         {
             return View(new UsuarioLoginVO());
         }
-        [HttpPost]
-        public async Task<IActionResult> Login(string email,string senha)
+
+        public async Task<ActionResult<dynamic>> Login(string email, string senha)
         {
             // Recupera o usuário
-            var user = _context.usuario.Where(w=>w.email == email && w.senha == senha).FirstOrDefault();
+            var user = _context.usuario.Where(w => w.email == email && w.senha == senha).FirstOrDefault();
 
             // Verifica se o usuário existe
             if (user == null)
@@ -50,7 +50,7 @@ namespace LocaAmigos.Controllers
             var token = service.GenerateToken(user);
             // Oculta a senha
             user.senha = "";
-            return RedirectToAction("Index","Home");
+            return new {    user= email,token= token};
         }
         [Authorize]
         // GET: Usuarios/Details/5
